@@ -10,9 +10,5 @@ export class SidebarComponent {
 
   constructor(private countriesv:countriesService) { }
 
-  get history(): Country[] {
-    return this.countriesv.countries;
-  }
-
 
 }

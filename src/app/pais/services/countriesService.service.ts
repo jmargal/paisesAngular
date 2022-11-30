@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Country } from '../interfaces/searchCountry.interface';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,33 +10,25 @@ export class countriesService {
   constructor(private http: HttpClient) {}
 
   //Url de la api
-  private url: string = 'https://restcountries.com/v3.1';
-  //Lista de interfaz de paises que he definido, esta vacia hasta que le hacen una peticion
-  countryList: Country[] = [];
+  private url: string = 'https://restcountries.com/v3.1'; //Para buscar por nombre
+  private unicoPais:string= 'https://restcountries.com/v3.1/alpha/'; //Por codigo
+  
 
- get countries():Country[]{
-    //Los ... significan una copia
-    return [...this.countryList];
- }
 
- buscarCountry(name:string): Country[] {
-    //La API devuelve una COLECCION asi que me quedo resp entero y no un resp."propiedad"
-    //A la url le sumo el parametro que me tienen que pasar
-    //Devuelve una copia de la lista con los resultados del pais que le han buscado
-    this.http.get<Country[]>(`${this.url}/name/${name}`)
-    .subscribe({
-      next: (resp) =>{
-          this.countryList = resp;
-      },
-      error: (err) =>{
-
-      }
-  })
-    //Los ... significan una copia
-    return [...this.countryList];
+  //Metodo que devuelve un observable de country array
+ buscarCountry(name:string):Observable<Country[]> {
+   
+    //Hace el return de --> el objeto http que he inyectado, su metodo get de la url que tengo arriba más el name 
+    //que me pasan por parametro
+    //La api devuelve una coleccion de country
+    return this.http.get<Country[]>(`${this.url}/name/${name}`)
+    
   }
+   
 
-
-
- 
-}
+  //Metodo que se le pasa un codigo y devuelce el observable de country array
+  country(code:string):Observable<Country[]>{
+    //Idem al metodo de arriba pero con un codigo 
+    return this.http.get<Country[]>(`${this.unicoPais}/${code}`);
+  }
+  }

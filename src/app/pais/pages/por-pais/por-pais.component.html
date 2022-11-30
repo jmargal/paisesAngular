@@ -1,7 +1,13 @@
-<div class="alert alert-danger">
-  No se encontró nada con el término _______
+<!--El input para que busque el pais, tiene mapeada la propiedad query del componente-->
+<form (ngSubmit)="buscarPais()">
+  <input type="text" id="search" name="search" [(ngModel)]="query">
+</form>
+<!--Si la bandera esta a true ,significa que hay error y que se muestre esto-->
+<div class="alert alert-danger" *ngIf="error">
+  No se encontró nada con el término {{errorMsg}}
 </div>
-<table class="table table-hover">
+<!--Si la lista esta vacia no se mostrara la tabla-->
+<table class="table table-hover" *ngIf="countryList.length">
   <thead>
     <tr>
       <th> # </th>
@@ -14,9 +20,8 @@
   </thead>
   <tbody>
     <!--Va a actuar sobre la propiedad name del componente, al pulsar intro llama al método buscarPais del componente con ese name-->
-    <input [(ngModel)]="name" (keydown.enter)="buscarPais(name)" type="text" class="form-control"
-      placeholder="Search country...">
-    <tr *ngFor="let country of results; let i=index">
+
+    <tr *ngFor="let country of countryList; let i=index">
       <!-- Esto es lo que tenemos que repetir por cada país que encuentre -->
       <td> {{i+1}} </td> <!-- Aquí obtendremos el número de resultado -->
       <td>
