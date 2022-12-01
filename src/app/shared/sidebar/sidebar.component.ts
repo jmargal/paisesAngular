@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { countriesService } from 'src/app/pais/services/countriesService.service';
-import { Country } from '../../pais/interfaces/searchCountry.interface';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -9,6 +9,10 @@ import { Country } from '../../pais/interfaces/searchCountry.interface';
 export class SidebarComponent {
 
   constructor(private countriesv:countriesService) { }
+
+  goTo(component:string){
+    
+  }
 
 
 }

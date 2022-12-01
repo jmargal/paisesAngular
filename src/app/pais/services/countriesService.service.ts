@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Country } from '../interfaces/searchCountry.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -31,4 +32,7 @@ export class countriesService {
     //Idem al metodo de arriba pero con un codigo 
     return this.http.get<Country[]>(`${this.unicoPais}/${code}`);
   }
+
+
+
   }
